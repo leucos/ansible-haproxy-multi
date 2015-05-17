@@ -5,10 +5,9 @@
   apt: pkg=haproxy state=installed update_cache=yes
 
 - name: Checks that stats are enabled and authentication is set
-  debug: msg="Checking if stats authentication is set"
-  failed_when: haproxy_stats_username is not defined 
-    or haproxy_stats_password is not defined
-  when: haproxy_stats_enable
+  fail: msg="Please set haproxy_stats_username and haproxy_stats_password when haproxy_stats_enable is set to true"
+  when: "haproxy_stats_enable and 
+    (haproxy_stats_username is not defined or haproxy_stats_password is not defined)"
 
 - name: Adds default config
   template: src='../templates/haproxy.cfg.j2' dest=/etc/haproxy/haproxy.cfg
