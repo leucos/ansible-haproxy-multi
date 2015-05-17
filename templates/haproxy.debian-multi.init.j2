@@ -43,6 +43,13 @@ haproxy_config()
 	return 0
 }
 
+haprox_check()
+{
+	haproxy_config || return 2
+  /usr/sbin/haproxy -c -- $config
+  return $?
+}
+
 haproxy_start()
 {
 	haproxy_config || return 2
@@ -92,6 +99,22 @@ haproxy_status()
 
 
 case "$1" in
+check)
+	log_daemon_msg "Checking haproxy config" "haproxy"
+	haproxy_check
+	ret=$?
+	case "$ret" in
+	0)
+		log_end_msg 0
+    echo "config ok"
+		;;
+	*)
+		log_end_msg $ret
+		echo "config seems invalid"
+		;;
+	esac
+	exit $ret
+	;;
 start)
 	log_daemon_msg "Starting haproxy" "haproxy"
 	haproxy_start
