@@ -43,7 +43,7 @@ haproxy_config()
   return 0
 }
 
-haprox_check()
+haproxy_check()
 {
   haproxy_config || return 2
   /usr/sbin/haproxy -c -- $config
