@@ -46,7 +46,7 @@ haproxy_config()
 haproxy_check()
 {
   haproxy_config || return 2
-  /usr/sbin/haproxy -c -- $config
+  /usr/sbin/haproxy -c $config
   return $?
 }
 
