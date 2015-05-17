@@ -4,7 +4,7 @@ haproxy-multi Ansible playbook
 [![Travis
 CI](http://img.shields.io/travis/leucos/ansible-haproxy-multi.svg?style=flat)](http://travis-ci.org/erasme/ansible-haproxy-multi)
 [![Ansible
-Galaxy](http://img.shields.io/badge/galaxy-leucos.ansible--haproxy--multi-660198.svg?style=flat)](https://galaxy.ansible.com/list#/roles/2909)
+Galaxy](http://img.shields.io/badge/galaxy-leucos.ansible--haproxy--multi-660198.svg?style=flat)](https://galaxy.ansible.com/list#/roles/3810)
 
 This playbook will install haproxy with a special init script that can read
 configuration fragments in `/etc/haproxy/haproxy.conf.d/`
