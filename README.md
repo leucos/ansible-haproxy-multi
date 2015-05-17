@@ -29,8 +29,8 @@ Role Variables
 Tags
 ----
 
-  - haproxy: whole role
-  - haproxy: config for the config files part
+  - `haproxy` for the whole role
+  - `haproxy:config` for the config files part
 
 Dependencies
 ------------
