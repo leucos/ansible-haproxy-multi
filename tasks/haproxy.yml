@@ -1,0 +1,37 @@
+- name: Adds vbernat PPA
+  apt_repository: repo=ppa:vbernat/haproxy-1.5 state=present
+
+- name: Installs haproxy
+  apt: pkg=haproxy state=installed update_cache=yes
+
+- name: Checks that stats are enabled and authentication is set
+  debug: msg="Checking if stats authentication is set"
+  failed_when: haproxy_stats_username is not defined 
+    or haproxy_stats_password is not defined
+  when: haproxy_stats_enable
+
+- name: Adds default config
+  template: src='../templates/haproxy.cfg.j2' dest=/etc/haproxy/haproxy.cfg
+  notify: Restart haproxy-multi
+  tags: 
+    - config
+    - haproxy:config
+
+- name: Adds multi-startup script
+  template: >
+    src='../templates/haproxy.debian-multi.init.j2' 
+    dest=/etc/init.d/haproxy-multi
+    mode=700
+  notify: Restart haproxy-multi
+
+- name: Creates config fragments directory
+  file: path=/etc/haproxy/conf.d state=directory
+  notify: Restart haproxy-multi
+
+- name: Disables stock init script
+  service: name=haproxy enabled=no
+  changed_when: false
+
+- name: Enables multi init script
+  service: name=haproxy-multi enabled=yes
+  notify: Restart haproxy-multi

@@ -1,0 +1,2 @@
+haproxy_stats_username: foo
+haproxy_stats_password: bar

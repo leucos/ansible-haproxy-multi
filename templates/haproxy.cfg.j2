@@ -1,0 +1,20 @@
+global
+    daemon
+    maxconn 256
+
+defaults
+    mode http
+    timeout connect {{ haproxy_timeout_connect }}
+    timeout client {{ haproxy_timeout_client }}
+    timeout server {{ haproxy_timeout_server }}
+
+{% if haproxy_stats_enable %}
+listen admin
+  bind {{ haproxy_stats_bind_interface }}:{{ haproxy_stats_port }}
+  mode http
+  stats realm Haproxy\ Statistics
+  stats enable
+  stats uri /
+  stats auth {{ haproxy_stats_username }}:{{ haproxy_stats_password }}
+{% endif %}
+

@@ -1,0 +1,4 @@
+.ruby-version
+.vagrant
+tests/ansible-haproxy-multi/playbooks/
+

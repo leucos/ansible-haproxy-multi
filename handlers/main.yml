@@ -1,0 +1,6 @@
+- name: Restart haproxy-multi
+  service: name=haproxy-multi state=restarted
+  notify: Check that haproxy runs
+
+- name: Check that haproxy runs 
+  shell: ps auwx | grep `cat /var/run/haproxy.pid` | grep haproxy

@@ -1,0 +1,9 @@
+haproxy_timeout_client: 50000ms
+haproxy_timeout_connect: 5000ms
+haproxy_timeout_server: 50000ms
+
+haproxy_stats_bind_interface: "*"
+haproxy_stats_enable: true
+haproxy_stats_port: 8080
+# haproxy_stats_username: foo
+# haproxy_stats_password: bar
