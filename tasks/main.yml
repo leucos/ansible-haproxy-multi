@@ -1,2 +1,3 @@
+- include: check_vars.yml tags=haproxy,check
 - include: haproxy.yml tags=haproxy
 

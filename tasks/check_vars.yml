@@ -1,0 +1,11 @@
+#- name: Checking that required variables are set
+#  fail: msg="{{ item }} is not defined"
+#  when: not {{ item }}
+#  with_items:
+#    - haproxy_filter_allow_stats_port
+
+- name: Checks that stats are enabled and authentication is set
+  fail: msg="Please set haproxy_stats_username and haproxy_stats_password when haproxy_stats_enable is set to true"
+  when: "haproxy_stats_enable and 
+    (haproxy_stats_username is not defined or haproxy_stats_password is not defined)"
+
