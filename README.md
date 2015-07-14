@@ -21,6 +21,7 @@ Role Variables
   - `haproxy_timeout_connect`: Set the maximum time to wait for a connection attempt to a server to succeed (default: 5000ms)
   - `haproxy_timeout_server`: Set the maximum inactivity time on the server side (default: 50000ms)
   - `haproxy_stats_bind_interface`: Interface to bind to for the stats front end (default: "*")
+  - `haproxy_filter_allow_stats_port`: IP addresses to let in for the stats port (default: _none_, __required__)
   - `haproxy_stats_enable`: Whether stats are enabled (default: true)
   - `haproxy_stats_port`: Stats port (default: 8080)
   - `haproxy_stats_username`: Stats username (no defaults, role will fail if `haproxy_stats_enable` is set and `haproxy_stats_username` is not set)

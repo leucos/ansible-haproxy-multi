@@ -67,8 +67,8 @@ function install() {
   sudo apt-get install -qqy git
 
   # Fetch and install rolespec
-  su_wrap 'git clone https://github.com/leucos/rolespec.git'
-  cd rolespec && git checkout feature/enhanced-rolespec-lib-path && sudo make install
+  su_wrap 'git clone https://github.com/nickjj/rolespec.git'
+  cd rolespec && sudo make install
   
   # Create empty test directory
   su_wrap 'ROLESPEC_LIB="/usr/local/lib/rolespec" rolespec -i ~/testdir'
