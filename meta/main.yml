@@ -25,7 +25,7 @@ dependencies:
     ferm_input_list:
       - type: 'dport_accept'
         dport: [ '8080' ]
-        saddr: "{{ haproxy_filter_allow_stats_port }}"
+        saddr: "{{ haproxy_filter_allow_stats }}"
         weight: '50'
         filename: 'haproxy_multi_stats_ports_accept'
 

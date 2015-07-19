@@ -1,6 +1,6 @@
 # Addresses to let in for the stats port
 # This should contain an IP ranges list
-haproxy_filter_allow_stats_port: false
+haproxy_filter_allow_stats: false
 
 # Stats interface configuration
 haproxy_stats_bind_interface: "*"
