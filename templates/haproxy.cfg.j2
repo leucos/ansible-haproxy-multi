@@ -8,7 +8,7 @@ defaults
     timeout client {{ haproxy_timeout_client }}
     timeout server {{ haproxy_timeout_server }}
 
-{% if haproxy_stats_enable %}
+{% if haproxy_stats_enabled %}
 listen admin
   bind {{ haproxy_stats_bind_interface }}:{{ haproxy_stats_port }}
   mode http
@@ -17,4 +17,3 @@ listen admin
   stats uri /
   stats auth {{ haproxy_stats_username }}:{{ haproxy_stats_password }}
 {% endif %}
-

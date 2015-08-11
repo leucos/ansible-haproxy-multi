@@ -1,3 +1,4 @@
 - include: check_vars.yml tags=haproxy,check
 - include: haproxy.yml tags=haproxy
-
+- include: datadog.yml tags=haproxy,datadog
+  when: datadog_api_key is defined and datadog_api_key

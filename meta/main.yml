@@ -2,12 +2,12 @@
 galaxy_info:
   author: Michel Blanc
   description: HAproxy multi-configurations role
-#  company: 
+#  company:
   license: MIT
   min_ansible_version: 1.8
   #
   # Below are all platforms currently available. Just uncomment
-  # the ones that apply to your role. If you don't see your 
+  # the ones that apply to your role. If you don't see your
   # platform on this list, let us know and we'll get it added!
   #
   platforms:
@@ -21,11 +21,15 @@ galaxy_info:
     - web
 
 dependencies:
+  - role: ansible-datadog-agent
+    src: https://github.com/leucos/ansible-datadog-agent.git
+    when: datadog_api_key | default(false)
   - role: ansible-ferm
-    ferm_input_list:
+    src: https://github.com/leucos/ansible-ferm.git
+    ferm_input_group_list:
       - type: 'dport_accept'
-        dport: [ '8080' ]
-        saddr: "{{ haproxy_filter_allow_stats }}"
-        weight: '50'
-        filename: 'haproxy_multi_stats_ports_accept'
-
+        protocols: 'tcp'
+        dport: [ '{{ haproxy_stats_port }}' ]
+        saddr: [ '0.0.0.0/0' ]
+        weight: '40'
+        filename: 'haproxy_clients_accept'

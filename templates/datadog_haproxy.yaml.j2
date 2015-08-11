@@ -1,0 +1,8 @@
+# HAProxy datadog integration
+
+init_config:
+
+instances:
+  - username: {{ haproxy_stats_username }}
+    password: {{ haproxy_stats_password }}
+    url: http://localhost:{{ haproxy_stats_port }}/admin?stats

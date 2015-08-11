@@ -3,17 +3,18 @@
 
 - name: Installs haproxy
   apt: pkg=haproxy state=installed update_cache=yes
+  register: __haproxy_installed
 
 - name: Adds default config
   template: src='../templates/haproxy.cfg.j2' dest=/etc/haproxy/haproxy.cfg
   notify: Restart haproxy-multi
-  tags: 
+  tags:
     - config
     - haproxy:config
 
 - name: Adds multi-startup script
   template: >
-    src='../templates/haproxy.debian-multi.init.j2' 
+    src='../templates/haproxy.debian-multi.init.j2'
     dest=/etc/init.d/haproxy-multi
     mode=700
   notify: Restart haproxy-multi
@@ -22,10 +23,21 @@
   file: path=/etc/haproxy/conf.d state=directory
   notify: Restart haproxy-multi
 
-- name: Disables stock init script
-  service: name=haproxy enabled=no
-  changed_when: false
-
 - name: Enables multi init script
   service: name=haproxy-multi enabled=yes
   notify: Restart haproxy-multi
+
+- name: Disables stock init script
+  service: name=haproxy enabled=no
+  changed_when: false
+  when: __haproxy_installed|changed
+
+- name: Stop current haproxy
+  service: name=haproxy state=stopped
+  when: __haproxy_installed|changed
+  notify: Restart haproxy-multi
+
+- name: Removes stock init script
+  file:
+    path: /etc/init.d/haproxy
+    state: absent
