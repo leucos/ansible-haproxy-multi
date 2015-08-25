@@ -2,10 +2,17 @@
 # This should contain an IP ranges list
 haproxy_filter_allow_stats: false
 
+haproxy_global_maxconn: 0
+# Set haproxy_global_stats_socket to a path to enable
+haproxy_global_stats_socket: false
+
 # Stats interface configuration
 haproxy_stats_bind_interface: "*"
+haproxy_stats_description: HAproxy statistics
 haproxy_stats_enabled: true
 haproxy_stats_port: 8080
+# Stats reload interval in seconds
+haproxy_stats_refresh: false
 haproxy_stats_username: false
 haproxy_stats_password: false
 
