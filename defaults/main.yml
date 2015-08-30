@@ -6,6 +6,9 @@ haproxy_global_maxconn: 0
 # Set haproxy_global_stats_socket to a path to enable
 haproxy_global_stats_socket: false
 
+# Install hatop by default
+haproxy_install_hatop: true
+
 # Stats interface configuration
 haproxy_stats_bind_interface: "*"
 haproxy_stats_description: HAproxy statistics
