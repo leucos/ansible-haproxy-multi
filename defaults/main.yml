@@ -13,7 +13,7 @@ haproxy_install_hatop: true
 haproxy_stats_bind_interface: "*"
 haproxy_stats_description: HAproxy statistics
 haproxy_stats_enabled: true
-haproxy_stats_port: 8080
+haproxy_stats_port: "8080"
 # Stats reload interval in seconds
 haproxy_stats_refresh: false
 haproxy_stats_username: false
