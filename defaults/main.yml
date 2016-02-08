@@ -19,6 +19,8 @@ haproxy_stats_refresh: false
 haproxy_stats_username: false
 haproxy_stats_password: false
 
-haproxy_timeout_client: 50000ms
-haproxy_timeout_connect: 5000ms
-haproxy_timeout_server: 50000ms
+haproxy_timeout_client: 31s
+haproxy_timeout_connect: 5s
+haproxy_timeout_http_request: 5s
+haproxy_timeout_server: 31s
+

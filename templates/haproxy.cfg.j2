@@ -8,9 +8,14 @@ global
 defaults
     mode http
     option forwardfor
+    # Set the maximum time to wait for a connection attempt to a server to succeed.
     timeout connect {{ haproxy_timeout_connect }}
+    # Set the maximum inactivity time on the client side
     timeout client {{ haproxy_timeout_client }}
+    # Set the maximum inactivity time on the server side
     timeout server {{ haproxy_timeout_server }}
+    # how long to wait for client to send complete headers
+    timeout http-request {{ haproxy_timeout_http_request }}
 
 {% if haproxy_stats_enabled %}
 listen admin
