@@ -20,7 +20,7 @@
   template:
     src: '../templates/haproxy.debian-multi.init.j2'
     dest: /etc/init.d/haproxy-multi
-      mode: 700
+    mode: 0700
   notify: Restart haproxy-multi
   when: "not {{ haproxy_use_pacemaker }}"
 
