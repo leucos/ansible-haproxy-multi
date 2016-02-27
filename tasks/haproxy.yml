@@ -36,7 +36,12 @@
   notify: Restart haproxy-multi
 
 - name: Enables multi init script if pacemaker is disabled
-  service: name=haproxy-multi enabled={{ ! haproxy_use_pacemaker }}
+  service: name=haproxy-multi enabled=yes
+  when: "not {{ haproxy_use_pacemaker }}"
+
+- name: Disables multi init script if pacemaker is enabled
+  service: name=haproxy-multi enabled=no
+  when: "{{ haproxy_use_pacemaker }}"
 
 - name: Disables stock init script
   service: name=haproxy enabled=no
