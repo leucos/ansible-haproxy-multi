@@ -26,7 +26,7 @@
 
 - name: Adds pacemaker OCF if pacemaker is used
   template:
-    src: templates/haproxy.ocf.j2
+    src: haproxy.ocf.j2
     dest: /usr/lib/ocf/resource.d/heartbeat/haproxy
     mode: 0755
   when: "not {{ haproxy_use_pacemaker }}"
