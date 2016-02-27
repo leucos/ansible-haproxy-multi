@@ -24,12 +24,4 @@ dependencies:
   - role: ansible-datadog-agent
     src: https://github.com/leucos/ansible-datadog-agent.git
     when: datadog_api_key | default(false)
-  - role: ansible-ferm
-    src: https://github.com/leucos/ansible-ferm.git
-    ferm_input_group_list:
-      - type: 'dport_accept'
-        protocols: 'tcp'
-        dport: [ '{{ haproxy_stats_port }}' ]
-        saddr: [ '0.0.0.0/0' ]
-        weight: '40'
-        filename: 'haproxy_clients_accept'
+
