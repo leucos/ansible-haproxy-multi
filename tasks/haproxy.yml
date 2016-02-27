@@ -17,19 +17,26 @@
     - haproxy:config
 
 - name: Adds multi-startup script
-  template: >
-    src='../templates/haproxy.debian-multi.init.j2'
-    dest=/etc/init.d/haproxy-multi
-    mode=700
+  template:
+    src: '../templates/haproxy.debian-multi.init.j2'
+    dest: /etc/init.d/haproxy-multi
+      mode: 700
   notify: Restart haproxy-multi
+  when: "not {{ haproxy_use_pacemaker }}"
+
+- name: Adds pacemaker OCF if pacemaker is used
+  template:
+    src: templates/haproxy.ocf.j2
+    dest: /usr/lib/ocf/resource.d/heartbeat/haproxy
+    mode: 0755
+  when: "not {{ haproxy_use_pacemaker }}"
 
 - name: Creates config fragments directory
   file: path=/etc/haproxy/conf.d state=directory
   notify: Restart haproxy-multi
 
-- name: Enables multi init script
-  service: name=haproxy-multi enabled=yes
-  notify: Restart haproxy-multi
+- name: Enables multi init script if pacemaker is disabled
+  service: name=haproxy-multi enabled={{ ! haproxy_use_pacemaker }}
 
 - name: Disables stock init script
   service: name=haproxy enabled=no

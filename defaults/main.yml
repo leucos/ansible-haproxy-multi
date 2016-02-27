@@ -24,3 +24,6 @@ haproxy_timeout_connect: 5s
 haproxy_timeout_http_request: 5s
 haproxy_timeout_server: 31s
 
+# Do not use pacemaker by default
+haproxy_use_pacemaker: false
+
