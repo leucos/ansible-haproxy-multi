@@ -5,9 +5,13 @@
   apt: pkg=haproxy state=installed update_cache=yes
   register: __haproxy_installed
 
-- name: Installs haptop
-  apt: pkg=hatop state=latest
-  when: haproxy_install_hatop
+- name: Installs haptop & socat
+  apt: 
+    pkg: "{{ item }}"
+    state: latest
+  with_items:
+    - hatop
+    - socat
 
 - name: Adds default config
   template: src='../templates/haproxy.cfg.j2' dest=/etc/haproxy/haproxy.cfg

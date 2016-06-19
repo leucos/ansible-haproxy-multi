@@ -19,17 +19,17 @@ defaults
 
 {% if haproxy_stats_enabled %}
 listen admin
-  bind {{ haproxy_stats_bind_interface }}:{{ haproxy_stats_port }}
-  stats enable
-  stats realm Haproxy\ Statistics
+    bind {{ haproxy_stats_bind_interface }}:{{ haproxy_stats_port }}
+    stats enable
+    stats realm Haproxy\ Statistics
 {% if haproxy_stats_refresh %}
-  stats refresh {{ haproxy_stats_refresh }}s
+    stats refresh {{ haproxy_stats_refresh }}s
 {% endif %}
-  stats admin if TRUE
-  stats show-node
-  stats show-desc {{ haproxy_stats_description }}
-  stats show-legends
-  stats uri /
-  stats auth {{ haproxy_stats_username }}:{{ haproxy_stats_password }}
+    stats admin if TRUE
+    stats show-node
+    stats show-desc {{ haproxy_stats_description }}
+    stats show-legends
+    stats uri /
+    stats auth {{ haproxy_stats_username }}:{{ haproxy_stats_password }}
 {% endif %}
 
