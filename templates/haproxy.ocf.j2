@@ -32,7 +32,7 @@
 CONFIG_D=/etc/haproxy/conf.d
 PIDFILE=/var/run/haproxy.pid
 
-USAGE="Usage: $0 {start|stop|status|monitor|validate-all|meta-data}";
+USAGE="Usage: $0 {start|stop|status|reload|monitor|validate-all|meta-data}";
 
 ##########################################################################
 
@@ -47,50 +47,47 @@ cat <<END
 <?xml version="1.0"?>
 <!DOCTYPE resource-agent SYSTEM "ra-api-1.dtd">
 <resource-agent name="haproxy">
-<version>1.0</version>
-<longdesc lang="en">
-This script manages haproxy daemon
-</longdesc>
-<shortdesc lang="en">Manages an haproxy daemon</shortdesc>
+	<version>1.0</version>
+	<longdesc lang="en">This script manages haproxy daemon</longdesc>
+	<shortdesc lang="en">Manages an haproxy daemon</shortdesc>
 
-<parameters>
+	<parameters>
+		<parameter name="binpath">
+			<longdesc lang="en">
+		The haproxy binary path.
+		For example, "/usr/sbin/haproxy"
+			</longdesc>
+			<shortdesc lang="en">Full path to the haproxy binary</shortdesc>
+			<content type="string" default="/usr/sbin/haproxy"/>
+		</parameter>
 
-<parameter name="binpath">
-<longdesc lang="en">
-The haproxy binary path.
-For example, "/usr/sbin/haproxy"
-</longdesc>
-<shortdesc lang="en">Full path to the haproxy binary</shortdesc>
-<content type="string" default="/usr/sbin/haproxy"/>
-</parameter>
+		<parameter name="conffile">
+			<longdesc lang="en">
+			The haproxy daemon configuration file name with full path.
+			For example, "/etc/haproxy/haproxy.cfg"
+			</longdesc>
+			<shortdesc lang="en">Configuration file name with full path</shortdesc>
+			<content type="string" default="/etc/haproxy/haproxy.cfg" />
+		</parameter>
 
-<parameter name="conffile">
-<longdesc lang="en">
-The haproxy daemon configuration file name with full path.
-For example, "/etc/haproxy/haproxy.cfg"
-</longdesc>
-<shortdesc lang="en">Configuration file name with full path</shortdesc>
-<content type="string" default="/etc/haproxy/haproxy.cfg" />
-</parameter>
+		<parameter name="extraconf">
+			<longdesc lang="en">
+			Extra command line arguments to pass to haproxy.
+			For example, "-f /etc/haproxy/shared.cfg"
+			</longdesc>
+			<shortdesc lang="en">Extra command line arguments for haproxy</shortdesc>
+			<content type="string" default="" />
+		</parameter>
+	</parameters>
 
-<parameter name="extraconf">
-<longdesc lang="en">
-Extra command line arguments to pass to haproxy.
-For example, "-f /etc/haproxy/shared.cfg"
-</longdesc>
-<shortdesc lang="en">Extra command line arguments for haproxy</shortdesc>
-<content type="string" default="" />
-</parameter>
-
-</parameters>
-
-<actions>
-<action name="start" timeout="20s"/>
-<action name="stop" timeout="20s"/>
-<action name="monitor" depth="0" timeout="20s" interval="60s" />
-<action name="validate-all" timeout="20s"/>
-<action name="meta-data"  timeout="5s"/>
-</actions>
+	<actions>
+		<action name="start" timeout="20s" />
+		<action name="stop" timeout="20s" />
+		<action name="reload" timeout="20s" />
+		<action name="monitor" depth="0" timeout="20s" interval="60s" />
+		<action name="validate-all" timeout="20s" />
+		<action name="meta-data"  timeout="5s" />
+	</actions>
 </resource-agent>
 END
 exit $OCF_SUCCESS
@@ -236,34 +233,47 @@ if [ $# -ne 1 ]; then
 fi
 
 case $1 in
-	start)	get_pid_and_conf_file
+	start)
+		get_pid_and_conf_file
 		haproxy_start
 		;;
 
-	stop)	get_pid_and_conf_file
+	stop)
+		get_pid_and_conf_file
 		haproxy_stop
 		;;
 
-	status)	get_pid_and_conf_file
+	reload)
+		get_pid_and_conf_file
+		kill -USR2 $(cat $PIDFILE)
+		;;
+
+	status)
+		get_pid_and_conf_file
 		haproxy_status
 		;;
 
-	monitor)get_pid_and_conf_file
+	monitor)
+		get_pid_and_conf_file
 		haproxy_monitor
 		;;
 
-	validate-all)	get_pid_and_conf_file
-			haproxy_validate_all
-			;;
+	validate-all)
+		get_pid_and_conf_file
+		haproxy_validate_all
+		;;
 
-	meta-data)	meta_data
-			;;
+	meta-data)
+		meta_data
+		;;
 
-	usage)	usage
+	usage)	
+		usage
 		exit $OCF_SUCCESS
 		;;
 
-	*)	usage
+	*)	
+		usage
 		exit $OCF_ERR_UNIMPLEMENTED
 		;;
 esac

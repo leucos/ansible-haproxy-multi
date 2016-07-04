@@ -4,6 +4,9 @@ global
 {% if haproxy_global_stats_socket %}
     stats socket {{ haproxy_global_stats_socket }} mode 660 level admin group haproxy
 {% endif %}
+    # Leave pidfile even if it is present in defaults !
+    # pacemaker haproxy OCF file requires it !
+    pidfile /var/run/haproxy.pid
 
 defaults
     mode http
