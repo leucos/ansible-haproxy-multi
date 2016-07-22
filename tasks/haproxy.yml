@@ -1,6 +1,11 @@
 - name: Adds vbernat PPA
   apt_repository: repo=ppa:vbernat/haproxy-1.5 state=present
 
+- name: Adds PPA pinning to prevent upgrading to distribution version
+  copy:
+    src: vbernat-haproxy-1_5-pin-1000
+    dest: /etc/apt/preferences.d/
+
 - name: Installs haproxy
   apt: 
     pkg: "haproxy=1.5.*"
