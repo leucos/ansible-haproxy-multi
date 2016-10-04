@@ -1,5 +1,8 @@
 - name: Adds vbernat PPA
-  apt_repository: repo=ppa:vbernat/haproxy-1.5 state=present
+  apt_repository: 
+    repo: "ppa:vbernat/haproxy-1.5"
+    state: present
+    update_cache: yes
 
 - name: Adds PPA pinning to prevent upgrading to distribution version
   copy:
@@ -10,7 +13,6 @@
   apt: 
     pkg: "haproxy=1.5.*"
     state: installed 
-    update_cache: yes
   register: __haproxy_installed
 
 - name: Installs haptop & socat
@@ -41,7 +43,7 @@
     src: haproxy.ocf.j2
     dest: /usr/lib/ocf/resource.d/heartbeat/haproxy
     mode: 0755
-  when: "not {{ haproxy_use_pacemaker }}"
+  when: haproxy_use_pacemaker
 
 - name: Creates config fragments directory
   file: path=/etc/haproxy/conf.d state=directory
