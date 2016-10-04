@@ -36,7 +36,7 @@
     dest: /etc/init.d/haproxy-multi
     mode: 0700
   notify: Restart haproxy-multi
-  when: "not {{ haproxy_use_pacemaker }}"
+  when: not haproxy_use_pacemaker
 
 - name: Adds pacemaker OCF if pacemaker is used
   template:
@@ -51,7 +51,7 @@
 
 - name: Enables multi init script if pacemaker is disabled
   service: name=haproxy-multi enabled=yes
-  when: "not {{ haproxy_use_pacemaker }}"
+  when: not haproxy_use_pacemaker
 
 - name: Disables multi init script if pacemaker is enabled
   service: name=haproxy-multi enabled=no
@@ -71,3 +71,4 @@
   file:
     path: /etc/init.d/haproxy
     state: absent
+
