@@ -10,7 +10,8 @@ global
 
 defaults
     mode http
-    option forwardfor
+    option forwardfor{% if haproxy_forward_for_except %} except {{ haproxy_forward_for_except }}
+{% endif %}
     # Set the maximum time to wait for a connection attempt to a server to succeed.
     timeout connect {{ haproxy_timeout_connect }}
     # Set the maximum inactivity time on the client side
@@ -26,7 +27,7 @@ listen admin
     stats enable
     stats realm Haproxy\ Statistics
 {% if haproxy_stats_refresh %}
-    stats refresh {{ haproxy_stats_refresh }}s
+    stats refresh {{ haproxy_stats_refresh }}
 {% endif %}
     stats admin if TRUE
     stats show-node
