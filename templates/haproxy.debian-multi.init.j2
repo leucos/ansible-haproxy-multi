@@ -75,8 +75,9 @@ haproxy_stop()
 haproxy_reload()
 {
   haproxy_config || return 2
-  $HAPROXY $config -p $PIDFILE -D $EXTRAOPTS -sf $(cat $PIDFILE) \
+  $HAPROXY $config -p $PIDFILE -D $EXTRAOPTS \
     || return 2
+  kill -USR2 $(cat $PIDFILE)
   return 0
 }
 
