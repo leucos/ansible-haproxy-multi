@@ -10,7 +10,7 @@ global
 
 defaults
     mode http
-    option forwardfor{% if haproxy_forward_for_except %} except {{ haproxy_forward_for_except }}
+    option forwardfor{% if haproxy_forward_for_except is defind %} except {{ haproxy_forward_for_except }}
 {% endif %}
     # Set the maximum time to wait for a connection attempt to a server to succeed.
     timeout connect {{ haproxy_timeout_connect }}
