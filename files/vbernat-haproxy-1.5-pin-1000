@@ -1,3 +1,0 @@
-Package: haproxy
-Pin: release o=LP-PPA-vbernat-haproxy-1.5
-Pin-Priority: 1000
